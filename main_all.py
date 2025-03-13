@@ -36,16 +36,18 @@ def save_text_to_file(text, filename):
 
 def main(base_url,id):
     all_links = get_all_links(base_url)
-    if not os.path.exists(id):
-        os.makedirs(id)
+    dir = 'data/txt/'+id
+    if not os.path.exists(dir):
+        os.makedirs(dir)
     
     for link in all_links:
-        if not link.startswith('http'):
+        if not link.startswith('http') and not link.startswith('..'):
             link = base_url + link
-        title, text = get_text_from_url(link)
-        filename = f"{id}/{title}.txt"
-        save_text_to_file(text, filename)
-        print(f"已保存来自 {link} 的文本到 {filename}")
+            print('抓取',link)
+            title, text = get_text_from_url(link)
+            filename = f"{dir}/{title}.txt"
+            save_text_to_file(text, filename)
+            print(f"已保存来自 {link} 的文本到 {filename}")
 
 if __name__ == "__main__":
     # 红楼梦
@@ -60,5 +62,5 @@ if __name__ == "__main__":
     ids = ['jpm','hlm','xyj','shz','sgyy']
     for id in ids:
         base_url = base_url + id + '/'
-        print(base_url)
+        print('正在抓取...',base_url)
         main(base_url,id)
