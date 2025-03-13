@@ -36,6 +36,7 @@ def save_text_to_file(text, filename):
 
 def main(base_url,id):
     all_links = get_all_links(base_url)
+    # 创建存储路径，根目录下data/txt/
     dir = 'data/txt/'+id
     if not os.path.exists(dir):
         os.makedirs(dir)
@@ -45,6 +46,7 @@ def main(base_url,id):
             link = base_url + link
             print('抓取',link)
             title, text = get_text_from_url(link)
+            # 拼接存储路径
             filename = f"{dir}/{title}.txt"
             save_text_to_file(text, filename)
             print(f"已保存来自 {link} 的文本到 {filename}")
@@ -61,6 +63,6 @@ if __name__ == "__main__":
     base_url = 'http://www.purepen.com/'
     ids = ['jpm','hlm','xyj','shz','sgyy']
     for id in ids:
-        base_url = base_url + id + '/'
-        print('正在抓取...',base_url)
-        main(base_url,id)
+        url = base_url + id + '/'
+        print('正在抓取...',url)
+        main(url,id)
